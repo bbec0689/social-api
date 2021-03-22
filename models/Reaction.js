@@ -1,5 +1,5 @@
 const { Schema, model, Types } = require("mongoose");
-const Validator = require("../Utilities/validator");
+const Validator = require("../Utils/validation");
 
 const reactionSchema = new Schema({
   reactionID: {
