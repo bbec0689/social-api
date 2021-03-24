@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Validator = require("../Utils/validation");
+const reactionSchema = require("./Reaction");
 
 const ThoughtSchema = new Schema(
   {
@@ -15,9 +16,10 @@ const ThoughtSchema = new Schema(
       get: (createdAtVal) => dateFormat(createdAtVal),
     },
     username: {
-        type: Schema.Types.ObjectId,
-        ref: "Users",
+        type: String,
+        required: true,
     },
+    reactions: [reactionSchema]
   },
   {
     toJSON: {
@@ -25,6 +27,10 @@ const ThoughtSchema = new Schema(
     },
   }
 );
+
+ThoughtSchema.virtual("reactionsCount").get(function () {
+  return this.reactions.length;
+});
 
 const Thought = model("Thought", ThoughtSchema);
 
